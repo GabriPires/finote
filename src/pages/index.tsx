@@ -8,7 +8,7 @@ import { SectionTitle } from '@/components/SectionTitle'
 
 export default function Home() {
   return (
-    <div className="flex flex-col px-3 py-3">
+    <div className="flex flex-col px-3 py-3 lg:mx-auto lg:max-w-4xl">
       <Header />
 
       <SectionTitle
@@ -24,7 +24,7 @@ export default function Home() {
         <Notebook title={'Finanças 28/06'} />
       </Section>
 
-      <SectionTitle title="Suas finanças" />
+      <SectionTitle title="Suas finanças avulsas" />
 
       <Section>
         <NewNoteButton />
