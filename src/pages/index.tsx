@@ -1,10 +1,9 @@
-// const inter = Inter({ subsets: ['latin'] })
+import { Header } from '@/components/Header'
 
 export default function Home() {
   return (
-    <div>
-      <h1>Hello world</h1>
-      <button className="btn">Criar nota</button>
+    <div className="flex flex-col px-3 py-3">
+      <Header />
     </div>
   )
 }
