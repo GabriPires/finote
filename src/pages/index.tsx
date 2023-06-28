@@ -1,3 +1,4 @@
+import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
 import { NewNoteButton } from '@/components/NewNoteButton'
 import { NewNotebookButton } from '@/components/NewNotebookButton'
@@ -33,6 +34,8 @@ export default function Home() {
         <Note title={'Finanças 28/06'} />
         <Note title={'Finanças 28/06'} />
       </Section>
+
+      <Footer />
     </div>
   )
 }
