@@ -1,5 +1,6 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { StickyNote, X } from 'lucide-react'
+import { NewNoteForm } from './NewNoteForm'
 
 export function NewNoteButton() {
   return (
@@ -21,7 +22,8 @@ export function NewNoteButton() {
               <X className="h-5 w-5" />
             </Dialog.Close>
           </div>
-          epa pea
+
+          <NewNoteForm />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
