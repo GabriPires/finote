@@ -8,9 +8,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <NextSeo
         title="Finote | Descomplicando suas finanças pessoais"
         description="Finote é uma aplicação que te ajuda a descomplicar suas finanças pessoais, de forma simples e intuitiva."
-        // canonical="https://finote.vercel.app/"
+        canonical="https://finote.vercel.app/"
         openGraph={{
-          // url: 'https://finote.vercel.app/',
+          url: 'https://finote.vercel.app/',
           title: 'Finote | Descomplicando suas finanças pessoais',
           description:
             'Finote é uma aplicação que te ajuda a descomplicar suas finanças pessoais, de forma simples e intuitiva.',
