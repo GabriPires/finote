@@ -5,5 +5,9 @@ interface SectionProps {
 }
 
 export function Section({ children }: SectionProps) {
-  return <div className="mt-1 flex rounded bg-base-200 p-3">{children}</div>
+  return (
+    <div className="carousel-center carousel mt-1 space-x-4 rounded bg-base-200 p-3">
+      {children}
+    </div>
+  )
 }

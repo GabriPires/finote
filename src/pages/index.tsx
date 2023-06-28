@@ -1,4 +1,6 @@
 import { Header } from '@/components/Header'
+import { NewNoteButton } from '@/components/NewNoteButton'
+import { Note } from '@/components/Note'
 import { Section } from '@/components/Section'
 import { SectionTitle } from '@/components/SectionTitle'
 
@@ -12,11 +14,23 @@ export default function Home() {
         tip="Cadernos são conjuntos de folhas de finanças feitos para organizar sua vida"
       />
 
-      <Section>aoba</Section>
+      <Section>
+        <NewNoteButton />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+      </Section>
 
       <SectionTitle title="Suas finanças" />
 
-      <Section>aoba</Section>
+      <Section>
+        <NewNoteButton />
+        <Note />
+        <Note />
+        <Note />
+        <Note />
+      </Section>
     </div>
   )
 }
