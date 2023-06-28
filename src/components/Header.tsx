@@ -3,7 +3,7 @@ import { Wallet } from 'lucide-react'
 export function Header() {
   return (
     <header className="flex flex-col gap-4">
-      <div className="flex justify-between">
+      <div className="flex items-center justify-between">
         <Wallet className="h-10 w-10" />
         <button className="btn-primary btn rounded-full">Entrar</button>
       </div>
