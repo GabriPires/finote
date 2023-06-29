@@ -1,4 +1,5 @@
 import '@/styles/globals.css'
+import '../lib/dayjs'
 import { NextSeo } from 'next-seo'
 import type { AppProps } from 'next/app'
 
@@ -16,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
             'Finote é uma aplicação que te ajuda a descomplicar suas finanças pessoais, de forma simples e intuitiva.',
         }}
       />
+
       <Component {...pageProps} />
     </>
   )

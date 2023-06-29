@@ -10,7 +10,7 @@ import { SectionTitle } from '@/components/SectionTitle'
 export default function Home() {
   return (
     <div className="flex h-screen flex-col px-3 py-3 lg:mx-auto lg:max-w-4xl">
-      <Header />
+      <Header withWelcomeMessage />
 
       <SectionTitle
         title="Seus cadernos"
