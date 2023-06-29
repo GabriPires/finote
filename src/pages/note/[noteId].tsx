@@ -1,8 +1,9 @@
 import { Header } from '@/components/Header'
+import { NewEntryModal } from '@/components/NewEntryModal'
 import { NoteItem } from '@/components/NoteItem'
 import { PrimaryBox } from '@/components/PrimaryBox'
 import dayjs from 'dayjs'
-import { Plus, StickyNote } from 'lucide-react'
+import { StickyNote } from 'lucide-react'
 import { GetServerSideProps } from 'next'
 
 interface Entry {
@@ -46,10 +47,7 @@ export default function NotePage({ note }: NotePageProps) {
         <p className="mt-2">{note.description}</p>
 
         <div className="mt-4 flex flex-col gap-2">
-          <button className="btn btn-outline btn-primary lg:w-fit">
-            <Plus />
-            Nova entrada
-          </button>
+          <NewEntryModal />
 
           {note.entries.map((annotation, index) => (
             <NoteItem
