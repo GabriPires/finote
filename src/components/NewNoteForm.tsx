@@ -2,12 +2,19 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { FormControl } from './Form/FormControl'
+import { FormErrorMessage } from './Form/FormErrorMessage'
+import { FormLabel } from './Form/FormLabel'
 
 const newNoteFormSchema = z.object({
   title: z
     .string()
     .min(1, 'Digite um título para sua anotação')
     .max(80, 'O título deve ter no máximo 80 caracteres'),
+  description: z
+    .string()
+    .max(255, 'Digite no máximo 255 caracteres na descrição')
+    .optional(),
 })
 
 type NewNoteFormProps = z.infer<typeof newNoteFormSchema>
@@ -21,6 +28,7 @@ export function NewNoteForm() {
     resolver: zodResolver(newNoteFormSchema),
     defaultValues: {
       title: '',
+      description: '',
     },
   })
 
@@ -30,10 +38,8 @@ export function NewNoteForm() {
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
-      <div className="form-control w-full">
-        <label className="label">
-          <span className="label-text">Qual o título da sua anotação?</span>
-        </label>
+      <FormControl>
+        <FormLabel htmlFor={'title'}>Qual o título da sua anotação?</FormLabel>
         <input
           type="text"
           placeholder="Título da anotação"
@@ -41,13 +47,22 @@ export function NewNoteForm() {
           {...register('title')}
         />
         {errors.title && (
-          <label className="label">
-            <span className="label-text-alt text-red-400">
-              {errors.title.message}
-            </span>
-          </label>
+          <FormErrorMessage>{errors.title.message}</FormErrorMessage>
         )}
-      </div>
+      </FormControl>
+
+      <FormControl>
+        <FormLabel htmlFor={'description'}>Descreva sua anotação</FormLabel>
+        <textarea
+          className="textarea-bordered textarea focus:textarea-primary"
+          placeholder="Descreva sua anotação."
+          style={{ resize: 'none' }}
+          {...register('description')}
+        />
+        {errors.description && (
+          <FormErrorMessage>{errors.description.message}</FormErrorMessage>
+        )}
+      </FormControl>
 
       <button
         type="submit"
