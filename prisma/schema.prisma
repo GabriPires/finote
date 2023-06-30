@@ -20,6 +20,7 @@ model User {
 
   accounts Account[]
   sessions Session[]
+  notes    Notes[]
 
   @@map("users")
 }
@@ -55,4 +56,33 @@ model Session {
 
   @@index([user_id])
   @@map("sessions")
+}
+
+model Entries {
+  id         String   @id @default(uuid())
+  title      String
+  value      Float
+  type       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  notes_id   String?
+
+  Notes Notes? @relation(fields: [notes_id], references: [id])
+
+  @@map("entries")
+}
+
+model Notes {
+  id          String   @id @default(uuid())
+  title       String
+  description String?  @db.Text
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  user_id     String?
+
+  entries Entries[]
+
+  User User? @relation(fields: [user_id], references: [id])
+
+  @@map("notes")
 }
