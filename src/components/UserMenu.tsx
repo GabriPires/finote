@@ -22,7 +22,7 @@ export function UserMenu() {
           <DropdownMenu.Separator className="h-[1px] bg-base-200" />
 
           <DropdownMenu.Item
-            className="flex items-center gap-2 p-1 rounded text-error focus-visible:outline-none focus-visible:bg-base-200"
+            className="flex items-center gap-2 p-1 rounded text-error cursor-pointer focus-visible:outline-none focus-visible:bg-base-200"
             onClick={() => signOut()}
           >
             <LogOut /> Sair

@@ -28,11 +28,10 @@ export function Header({ withWelcomeMessage = false }: HeaderProps) {
           </button>
         )}
       </div>
-
-      {withWelcomeMessage && (
+      {session && withWelcomeMessage && (
         <p className="text-2xl lg:max-w-sm">
-          Olá <span className="font-semibold">Gabriel Pires</span>, como iremos
-          descomplicar suas finanças hoje?
+          Olá <span className="font-semibold">{session.user.name}</span>, como
+          iremos descomplicar suas finanças hoje?
         </p>
       )}
     </header>
