@@ -22,6 +22,14 @@ Instale as dependências
   npm install
 ```
 
+Crie o container com Docker Compose
+
+```bash
+  docker compose up
+```
+
+Verifique se o container já está em execução
+
 Inicie o servidor
 
 ```bash
@@ -30,14 +38,16 @@ Inicie o servidor
 
 ## Stack utilizada
 
-**Front-end:** React, Next.js, TailwindCSS
+**Front-end:** React, Next.js, TailwindCSS, Next Auth
+**Back-end(serverless):** Prisma, Postgres
 
 ## Funcionalidades
 
 - [ ] Cadastrar usuário
 - [ ] Autenticar usuário
-- [ ] Criar caderno de finaças
+- [ ] Criar caderno de finanças
 - [ ] Criar anotação de finança
+- [ ] Criar entradas de finança nas anotações
 - [ ] Temas dark e light
 
 ## Autores
