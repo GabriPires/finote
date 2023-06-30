@@ -14,7 +14,7 @@ export default function Home() {
 
       <SectionTitle
         title="Seus cadernos"
-        tip="Cadernos são conjuntos de notas de finanças feitos para organizar sua vida"
+        tip="Cadernos são conjuntos de anotações de finanças feitos para organizar sua vida"
       />
 
       <Section>
@@ -25,7 +25,7 @@ export default function Home() {
         <Notebook title={'Finanças 28/06'} />
       </Section>
 
-      <SectionTitle title="Suas finanças avulsas" />
+      <SectionTitle title="Suas anotações de finanças" />
 
       <Section>
         <NewNoteButton />
