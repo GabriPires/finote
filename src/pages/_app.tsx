@@ -4,6 +4,8 @@ import { NextSeo } from 'next-seo'
 import type { AppProps } from 'next/app'
 import NextNProgress from 'nextjs-progressbar'
 import { SessionProvider } from 'next-auth/react'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClient } from '@/lib/react-query'
 
 export default function App({
   Component,
@@ -31,7 +33,9 @@ export default function App({
       />
 
       <SessionProvider session={session}>
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <Component {...pageProps} />
+        </QueryClientProvider>
       </SessionProvider>
     </>
   )
