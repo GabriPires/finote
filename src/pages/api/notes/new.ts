@@ -30,7 +30,7 @@ export default async function handler(
   const { title, description } = newNoteBodySchema.parse(req.body)
 
   try {
-    await prisma.notes.create({
+    const newNote = await prisma.notes.create({
       data: {
         title,
         description,
@@ -38,7 +38,7 @@ export default async function handler(
       },
     })
 
-    return res.status(201).end()
+    return res.status(201).json({ id: newNote.id })
   } catch (error) {
     return res.status(500).json({ error: 'Something went wrong' })
   }

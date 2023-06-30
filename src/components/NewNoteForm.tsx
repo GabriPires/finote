@@ -5,6 +5,9 @@ import { z } from 'zod'
 import { FormControl } from './Form/FormControl'
 import { FormErrorMessage } from './Form/FormErrorMessage'
 import { FormLabel } from './Form/FormLabel'
+import { api } from '@/lib/axios'
+import { AxiosError } from 'axios'
+import { useRouter } from 'next/router'
 
 const newNoteFormSchema = z.object({
   title: z
@@ -20,6 +23,8 @@ const newNoteFormSchema = z.object({
 type NewNoteFormProps = z.infer<typeof newNoteFormSchema>
 
 export function NewNoteForm() {
+  const router = useRouter()
+
   const {
     register,
     handleSubmit,
@@ -32,8 +37,19 @@ export function NewNoteForm() {
     },
   })
 
-  function onSubmit(data: NewNoteFormProps) {
-    console.log(data)
+  async function onSubmit(data: NewNoteFormProps) {
+    try {
+      const response = await api.post('/notes/new', {
+        title: data.title,
+        description: data.description,
+      })
+
+      await router.push(`/note/${response.data.id}`)
+    } catch (error) {
+      if (error instanceof AxiosError && error?.response?.data?.message) {
+        alert(error.response.data.message)
+      }
+    }
   }
 
   return (

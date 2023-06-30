@@ -32,6 +32,7 @@ export default async function handler(
         entries: true,
       },
     })
+
     return res.status(200).json(notes)
   } catch (error) {
     return res.status(500).json({ error: 'Something went wrong' })
