@@ -3,8 +3,12 @@ import '../lib/dayjs'
 import { NextSeo } from 'next-seo'
 import type { AppProps } from 'next/app'
 import NextNProgress from 'nextjs-progressbar'
+import { SessionProvider } from 'next-auth/react'
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
     <>
       <NextSeo
@@ -25,7 +29,10 @@ export default function App({ Component, pageProps }: AppProps) {
         stopDelayMs={200}
         height={3}
       />
-      <Component {...pageProps} />
+
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+      </SessionProvider>
     </>
   )
 }

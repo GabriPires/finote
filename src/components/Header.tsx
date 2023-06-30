@@ -1,5 +1,6 @@
 import { Wallet } from 'lucide-react'
 import Link from 'next/link'
+import { signIn } from 'next-auth/react'
 
 interface HeaderProps {
   withWelcomeMessage?: boolean
@@ -12,7 +13,12 @@ export function Header({ withWelcomeMessage = false }: HeaderProps) {
         <Link href="/" title="Página Inicial">
           <Wallet className="h-10 w-10" />
         </Link>
-        <button className="btn-primary btn rounded-full">Entrar</button>
+        <button
+          className="btn-primary btn rounded-full"
+          onClick={() => signIn('google')}
+        >
+          Entrar
+        </button>
       </div>
 
       {withWelcomeMessage && (
