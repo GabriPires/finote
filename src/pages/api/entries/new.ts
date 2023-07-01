@@ -4,7 +4,7 @@ import { getServerSession } from 'next-auth'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 
-const newNoteBodySchema = z.object({
+const newEntryBodySchema = z.object({
   title: z.string(),
   value: z.coerce.number(),
   type: z.string(),
@@ -29,7 +29,7 @@ export default async function handler(
     return res.status(401).end()
   }
 
-  const { title, value, type, noteId } = newNoteBodySchema.parse(req.body)
+  const { title, value, type, noteId } = newEntryBodySchema.parse(req.body)
 
   try {
     await prisma.entries.create({
