@@ -16,7 +16,7 @@ export default function Home() {
   const { data: notes, isFetching } = useQuery<NoteProps[]>(
     ['home', 'notes'],
     async () => {
-      const response = await api.get('/notes', {})
+      const response = await api.get('/notes')
 
       return response.data
     },
