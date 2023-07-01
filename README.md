@@ -43,11 +43,11 @@ Inicie o servidor
 
 ## Funcionalidades
 
-- [ ] Cadastrar usuário
-- [ ] Autenticar usuário
+- [x] Cadastrar usuário
+- [x] Autenticar usuário
 - [ ] Criar caderno de finanças
-- [ ] Criar anotação de finança
-- [ ] Criar entradas de finança nas anotações
+- [x] Criar anotação de finança
+- [x] Criar entradas de finança nas anotações
 - [ ] Temas dark e light
 
 ## Autores
