@@ -2,12 +2,20 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { BuildNextAuthOptions } from '../auth/[...nextauth]'
 import { getServerSession } from 'next-auth'
 import { prisma } from '@/lib/prisma'
+import { z } from 'zod'
+
+const newNoteBodySchema = z.object({
+  title: z.string(),
+  value: z.coerce.number(),
+  type: z.string(),
+  noteId: z.string(),
+})
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  if (req.method !== 'GET') {
+  if (req.method !== 'POST') {
     return res.status(405).end()
   }
 
@@ -21,19 +29,19 @@ export default async function handler(
     return res.status(401).end()
   }
 
-  const { id } = req.query
+  const { title, value, type, noteId } = newNoteBodySchema.parse(req.body)
 
   try {
-    const notes = await prisma.notes.findUnique({
-      where: {
-        id: String(id),
-      },
-      include: {
-        entries: true,
+    await prisma.entries.create({
+      data: {
+        title,
+        value: value * 100,
+        type,
+        note_id: noteId,
       },
     })
 
-    return res.status(200).json(notes)
+    return res.status(201).end()
   } catch (error) {
     return res.status(500).json({ error: 'Something went wrong' })
   }

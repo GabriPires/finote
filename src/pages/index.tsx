@@ -47,7 +47,7 @@ export default function Home() {
       <Section>
         <NewNoteButton />
         {notes?.map((note) => (
-          <Note key={note.id} title={note.title} />
+          <Note key={note.id} id={note.id} title={note.title} />
         ))}
       </Section>
 

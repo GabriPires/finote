@@ -7,24 +7,40 @@ import { FormErrorMessage } from './Form/FormErrorMessage'
 import { FormLabel } from './Form/FormLabel'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 
-const newEntryFormSchema = z.object({
-  title: z
-    .string()
-    .min(1, 'Digite um título para sua anotação')
-    .max(80, 'O título deve ter no máximo 80 caracteres'),
-  value: z.coerce.number().min(0, 'O valor deve ser maior que zero'),
-  type: z.string(),
-})
+import { useRouter } from 'next/router'
+import { api } from '@/lib/axios'
+import { useQueryClient } from '@tanstack/react-query'
 
-type NewEntryFormProps = z.infer<typeof newEntryFormSchema>
+const newEntryFormSchema = z
+  .object({
+    title: z
+      .string()
+      .min(1, 'Digite um título para sua anotação')
+      .max(80, 'O título deve ter no máximo 80 caracteres'),
+    value: z.coerce.number().min(0, 'O valor deve ser maior que 0'),
+    type: z.string(),
+  })
+  .transform((data) => {
+    return {
+      ...data,
+      value: data.type === 'income' ? data.value : -data.value,
+    }
+  })
+
+type NewEntryFormData = z.infer<typeof newEntryFormSchema>
 
 export function NewEntryForm() {
+  const router = useRouter()
+  const { noteId } = router.query
+
+  const queryClient = useQueryClient()
+
   const {
     control,
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<NewEntryFormProps>({
+  } = useForm<NewEntryFormData>({
     resolver: zodResolver(newEntryFormSchema),
     defaultValues: {
       title: '',
@@ -33,8 +49,19 @@ export function NewEntryForm() {
     },
   })
 
-  function onSubmit(data: NewEntryFormProps) {
+  async function onSubmit(data: NewEntryFormData) {
     console.log(data)
+
+    await api
+      .post('/entries/new', {
+        title: data.title,
+        value: data.value,
+        type: data.type,
+        noteId,
+      })
+      .then(async () => {
+        await queryClient.invalidateQueries(['note', noteId])
+      })
   }
 
   return (

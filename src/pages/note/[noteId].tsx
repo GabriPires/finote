@@ -1,30 +1,47 @@
 import { Header } from '@/components/Header'
+import { Loading } from '@/components/Loading'
 import { NewEntryModal } from '@/components/NewEntryModal'
 import { NoteItem } from '@/components/NoteItem'
 import { PrimaryBox } from '@/components/PrimaryBox'
+import { api } from '@/lib/axios'
+import { useQuery } from '@tanstack/react-query'
 import dayjs from 'dayjs'
 import { StickyNote } from 'lucide-react'
-import { GetServerSideProps } from 'next'
+import { useRouter } from 'next/router'
 
 interface Entry {
   title: string
-  price: number
+  value: number
 }
 
 interface Note {
   title: string
   description?: string
-  createdAt: string
+  created_at: string
   entries: Entry[]
 }
 
-interface NotePageProps {
-  note: Note
-}
+export default function NotePage() {
+  const router = useRouter()
+  const { noteId } = router.query
 
-export default function NotePage({ note }: NotePageProps) {
-  const total = note.entries.reduce((acc, annotation) => {
-    return acc + annotation.price
+  const { data: note, isFetching } = useQuery<Note>(
+    ['note', noteId],
+    async () => {
+      const response = await api.get(`/notes/${noteId}`)
+      console.log(response.data)
+      return response.data
+    },
+  )
+
+  if (!note || isFetching) {
+    return <Loading />
+  }
+
+  const createdAt = dayjs(new Date(note.created_at)).format('D [de] MMMM YYYY')
+
+  const total = note.entries.reduce((acc, entry) => {
+    return acc + entry.value
   }, 0)
 
   const formattedTotal = new Intl.NumberFormat('pt-BR', {
@@ -43,18 +60,15 @@ export default function NotePage({ note }: NotePageProps) {
           <StickyNote className="mr-2" />
           <h1 className="text-2xl font-bold">{note.title}</h1>
         </div>
-        <span className="text-sm text-base-content/60">{note.createdAt}</span>
-        <p className="mt-2">{note.description}</p>
+        <span className="text-sm text-base-content/60">{createdAt}</span>
+
+        {note.description && <p className="mt-2">{note.description}</p>}
 
         <div className="mt-4 flex flex-col gap-2">
           <NewEntryModal />
 
-          {note.entries.map((annotation, index) => (
-            <NoteItem
-              key={index}
-              title={annotation.title}
-              price={annotation.price}
-            />
+          {note.entries.map((entry, index) => (
+            <NoteItem key={index} title={entry.title} price={entry.value} />
           ))}
         </div>
 
@@ -72,39 +86,4 @@ export default function NotePage({ note }: NotePageProps) {
       </PrimaryBox>
     </div>
   )
-}
-
-export const getServerSideProps: GetServerSideProps<
-  NotePageProps
-> = async () => {
-  const formattedCreatedAt = dayjs(new Date()).format('D [de] MMMM YYYY')
-
-  return {
-    props: {
-      note: {
-        title: 'Título da anotação',
-        createdAt: formattedCreatedAt,
-        description:
-          'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab nostrum officiis corrupti tempore tempora error sapiente expedita quae maiores aut quia commodi animi, dolores dignissimos asperiores explicabo facere quidem recusandae?',
-        entries: [
-          {
-            title: 'Gasto aleatório',
-            price: -12000,
-          },
-          {
-            title: 'Receita aleatória',
-            price: 67000,
-          },
-          {
-            title: 'Gasto aleatório',
-            price: -82000,
-          },
-          {
-            title: 'Salário',
-            price: 167000,
-          },
-        ],
-      },
-    },
-  }
 }

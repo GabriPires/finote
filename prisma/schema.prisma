@@ -65,9 +65,9 @@ model Entries {
   type       String
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  notes_id   String?
+  note_id    String?  @map("notes_id")
 
-  Notes Notes? @relation(fields: [notes_id], references: [id])
+  Notes Notes? @relation(fields: [note_id], references: [id])
 
   @@map("entries")
 }
