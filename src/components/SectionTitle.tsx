@@ -8,7 +8,11 @@ interface SectionTitleProps extends HTMLAttributes<HTMLDivElement> {
 
 export function SectionTitle({ title, tip, ...props }: SectionTitleProps) {
   return (
-    <div className="mt-8 flex items-center justify-between group" {...props}>
+    <div
+      className="mt-8 flex items-center justify-between group"
+      data-loading={false}
+      {...props}
+    >
       <h2 className="text-xl font-medium">{title}</h2>
       {tip && (
         <div className="tooltip tooltip-left md:tooltip-bottom" data-tip={tip}>

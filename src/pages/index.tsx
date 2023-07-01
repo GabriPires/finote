@@ -6,6 +6,8 @@ import { Section } from '@/components/Section'
 import { SectionTitle } from '@/components/SectionTitle'
 import { api } from '@/lib/axios'
 import { useQuery } from '@tanstack/react-query'
+import { LogIn } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 
 interface NoteProps {
   id: string
@@ -13,6 +15,8 @@ interface NoteProps {
 }
 
 export default function Home() {
+  const { data: session } = useSession()
+
   const { data: notes, isFetching } = useQuery<NoteProps[]>(
     ['home', 'notes'],
     async () => {
@@ -21,6 +25,29 @@ export default function Home() {
       return response.data
     },
   )
+
+  if (!session) {
+    return (
+      <div className="flex h-screen flex-col px-3 py-3 lg:mx-auto lg:max-w-4xl">
+        <Header />
+
+        <SectionTitle title="Bem vindo ao Finote" />
+        <p>
+          O Finote é um aplicativo de anotações de finanças pessoais. Aqui você
+          pode criar cadernos para organizar suas anotações de finanças da
+          maneira como quiser.
+        </p>
+        <p className="mt-2">
+          Para começar, faça login com sua conta do Google clicando no botão
+          abaixo.
+        </p>
+        <button className="mt-3 btn w-fit">
+          <LogIn />
+          Entrar
+        </button>
+      </div>
+    )
+  }
 
   return (
     <div className="flex h-screen flex-col px-3 py-3 lg:mx-auto lg:max-w-4xl">
