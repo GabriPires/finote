@@ -29,7 +29,11 @@ const newEntryFormSchema = z
 
 type NewEntryFormData = z.infer<typeof newEntryFormSchema>
 
-export function NewEntryForm() {
+interface NewEntryFormProps {
+  closeModal: () => void
+}
+
+export function NewEntryForm({ closeModal }:NewEntryFormProps) {
   const router = useRouter()
   const { noteId } = router.query
 
@@ -50,8 +54,6 @@ export function NewEntryForm() {
   })
 
   async function onSubmit(data: NewEntryFormData) {
-    console.log(data)
-
     await api
       .post('/entries/new', {
         title: data.title,
@@ -60,7 +62,7 @@ export function NewEntryForm() {
         noteId,
       })
       .then(async () => {
-        await queryClient.invalidateQueries(['note', noteId])
+        await queryClient.invalidateQueries(['note', noteId]).then(() => closeModal())
       })
   }
 

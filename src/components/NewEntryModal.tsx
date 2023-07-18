@@ -1,10 +1,13 @@
 import * as Dialog from '@radix-ui/react-dialog'
 import { CircleDollarSign, PlusIcon, X } from 'lucide-react'
 import { NewEntryForm } from './NewEntryForm'
+import { useState } from 'react'
 
 export function NewEntryModal() {
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+
   return (
-    <Dialog.Root>
+    <Dialog.Root open={isOpen} onOpenChange={open => setIsOpen(open)}>
       <Dialog.Trigger className="btn btn-outline btn-primary mb-2 lg:w-fit">
         <PlusIcon />
         Nova entrada
@@ -23,7 +26,7 @@ export function NewEntryModal() {
             </Dialog.Close>
           </div>
 
-          <NewEntryForm />
+          <NewEntryForm closeModal={() => setIsOpen(false)} />
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
