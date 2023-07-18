@@ -62,7 +62,9 @@ export function NewEntryForm({ closeModal }:NewEntryFormProps) {
         noteId,
       })
       .then(async () => {
-        await queryClient.invalidateQueries(['note', noteId]).then(() => closeModal())
+        await queryClient
+          .invalidateQueries(['note', noteId])
+          .then(() => closeModal())
       })
   }
 
