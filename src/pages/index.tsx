@@ -7,7 +7,7 @@ import { SectionTitle } from '@/components/SectionTitle'
 import { api } from '@/lib/axios'
 import { useQuery } from '@tanstack/react-query'
 import { LogIn } from 'lucide-react'
-import { useSession } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
 
 interface NoteProps {
   id: string
@@ -41,7 +41,7 @@ export default function Home() {
           Para começar, faça login com sua conta do Google clicando no botão
           abaixo.
         </p>
-        <button className="mt-3 btn w-fit">
+        <button className="mt-3 btn w-fit" onClick={() => signIn('google')}>
           <LogIn />
           Entrar
         </button>
