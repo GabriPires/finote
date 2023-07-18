@@ -33,7 +33,7 @@ interface NewEntryFormProps {
   closeModal: () => void
 }
 
-export function NewEntryForm({ closeModal }:NewEntryFormProps) {
+export function NewEntryForm({ closeModal }: NewEntryFormProps) {
   const router = useRouter()
   const { noteId } = router.query
 

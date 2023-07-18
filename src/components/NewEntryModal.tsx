@@ -7,7 +7,7 @@ export function NewEntryModal() {
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   return (
-    <Dialog.Root open={isOpen} onOpenChange={open => setIsOpen(open)}>
+    <Dialog.Root open={isOpen} onOpenChange={(open) => setIsOpen(open)}>
       <Dialog.Trigger className="btn btn-outline btn-primary mb-2 lg:w-fit">
         <PlusIcon />
         Nova entrada
