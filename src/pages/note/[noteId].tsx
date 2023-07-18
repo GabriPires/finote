@@ -25,16 +25,15 @@ export default function NotePage() {
   const router = useRouter()
   const { noteId } = router.query
 
-  const { data: note, isFetching } = useQuery<Note>(
+  const { data: note, isLoading } = useQuery<Note>(
     ['note', noteId],
     async () => {
       const response = await api.get(`/notes/${noteId}`)
-      console.log(response.data)
       return response.data
     },
   )
 
-  if (!note || isFetching) {
+  if (!note || isLoading) {
     return <Loading />
   }
 
