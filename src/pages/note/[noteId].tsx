@@ -10,8 +10,10 @@ import { StickyNote } from 'lucide-react'
 import { useRouter } from 'next/router'
 
 interface Entry {
+  id: string
   title: string
   value: number
+  note_id: string
 }
 
 interface Note {
@@ -36,6 +38,8 @@ export default function NotePage() {
   if (!note || isLoading) {
     return <Loading />
   }
+
+  console.log(note)
 
   const createdAt = dayjs(new Date(note.created_at)).format('D [de] MMMM YYYY')
 
@@ -67,7 +71,7 @@ export default function NotePage() {
           <NewEntryModal />
 
           {note.entries.map((entry, index) => (
-            <NoteItem key={index} title={entry.title} price={entry.value} />
+            <NoteItem key={index} entry={entry} />
           ))}
         </div>
 

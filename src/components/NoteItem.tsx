@@ -1,16 +1,39 @@
-import { CircleDollarSign } from 'lucide-react'
+import { api } from '@/lib/axios'
+import { queryClient } from '@/lib/react-query'
+import { CircleDollarSign, Loader, Trash } from 'lucide-react'
+import { useState } from 'react'
 
-interface NoteItemProps {
+interface Entry {
+  id: string
   title: string
-  price: number
+  value: number
+  note_id: string
 }
 
-export function NoteItem({ title, price }: NoteItemProps) {
-  const isPositive = price > 0
+interface NoteItemProps {
+  entry: Entry
+}
+
+export function NoteItem({ entry }: NoteItemProps) {
+  const { id, note_id, title, value } = entry
+
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  const isPositive = value > 0
+
+  async function handleRemoveNote() {
+    setIsDeleting(true)
+    await api
+      .delete(`/notes/remove/${id}`)
+      .then(async () => {
+        await queryClient.invalidateQueries(['note', note_id])
+      })
+      .finally(() => setIsDeleting(false))
+  }
 
   return (
     <div
-      className="group grid grid-cols-[auto_1fr_auto] items-center gap-3 rounded bg-base-300 p-3"
+      className="group grid grid-cols-[auto_1fr_auto_auto] items-center gap-3 rounded bg-base-300 p-3"
       data-positive={isPositive}
     >
       <CircleDollarSign className="h-7 w-7 text-error group-data-[positive=true]:text-success" />
@@ -19,8 +42,23 @@ export function NoteItem({ title, price }: NoteItemProps) {
         {new Intl.NumberFormat('pt-BR', {
           style: 'currency',
           currency: 'BRL',
-        }).format(price / 100)}
+        }).format(value / 100)}
       </p>
+
+      <div className="flex">
+        <button
+          title="Excluir anotação"
+          data-loading={isDeleting}
+          className="btn btn-link text-error p-0 min-h-0 h-7 w-7 data-[loading=true]:text-base-100"
+          onClick={handleRemoveNote}
+        >
+          {isDeleting ? (
+            <Loader className="h-5 w-5" />
+          ) : (
+            <Trash className="h-5 w-5" />
+          )}
+        </button>
+      </div>
     </div>
   )
 }
