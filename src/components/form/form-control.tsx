@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react'
 
 import { cn } from '@/lib/utils'
 
-import { Label } from './ui/label'
+import { Label } from '../ui/label'
 
 interface FormControlProps {
   id: string

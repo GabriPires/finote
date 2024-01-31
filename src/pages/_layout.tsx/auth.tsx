@@ -1,7 +1,21 @@
 import { CircleDollarSign } from 'lucide-react'
-import { Outlet } from 'react-router-dom'
+import { useLayoutEffect } from 'react'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+
+import { supabase } from '@/lib/supabase'
 
 export function AuthLayout() {
+  const { pathname } = useLocation()
+  const navigate = useNavigate()
+
+  useLayoutEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session && !['sign-in', 'sign-out'].includes(pathname)) {
+        navigate('/dashboard', { replace: true })
+      }
+    })
+  }, [navigate, pathname])
+
   return (
     <div className="flex min-h-screen flex-col antialiased lg:grid lg:grid-cols-2">
       <div className="h-full flex-col justify-between border-r border-foreground/5 p-10 text-muted-foreground lg:flex lg:bg-muted">

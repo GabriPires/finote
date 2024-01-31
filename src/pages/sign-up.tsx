@@ -7,8 +7,8 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { signUp } from '@/api/sign-up'
-import { FormControl } from '@/components/form-control'
-import { FormErrorMessage } from '@/components/form-error-message'
+import { FormControl } from '@/components/form/form-control'
+import { FormErrorMessage } from '@/components/form/form-error-message'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 

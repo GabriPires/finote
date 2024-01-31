@@ -1,7 +1,7 @@
 import { useLayoutEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
-import { Header } from '@/components/hader'
+import { Header } from '@/components/header/header'
 import { supabase } from '@/lib/supabase'
 
 export function AppLayout() {

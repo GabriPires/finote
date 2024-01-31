@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { signOut } from '@/api/sign-out'
 import { getProfile } from '@/api/user/get-profile'
 
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,8 +13,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu'
-import { Skeleton } from './ui/skeleton'
+} from '../ui/dropdown-menu'
+import { Skeleton } from '../ui/skeleton'
 
 export function AccountMenu() {
   const navigate = useNavigate()
@@ -40,7 +40,7 @@ export function AccountMenu() {
           size="icon"
           className="flex select-none items-center gap-2"
         >
-          <User className="h-4 w-4" />
+          <User className="h-5 w-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
