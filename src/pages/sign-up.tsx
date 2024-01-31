@@ -42,12 +42,7 @@ export function SignUpPage() {
     try {
       await signUpFn(data)
 
-      toast.success('Enviamos um link de autenticação para seu e-mail.', {
-        action: {
-          label: 'Reenviar e-mail',
-          onClick: () => handleSignUp(data),
-        },
-      })
+      toast.success('Enviamos um link de verificação para seu e-mail.')
     } catch (error) {
       toast.error('Credenciais inválidas.')
     }

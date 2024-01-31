@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
 import { Helmet } from 'react-helmet-async'
 import { useForm } from 'react-hook-form'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -23,6 +23,7 @@ type SignInForm = z.infer<typeof signInFormSchema>
 
 export function SignInPage() {
   const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
 
   const {
     register,
@@ -38,18 +39,25 @@ export function SignInPage() {
 
   const { mutateAsync: authenticate } = useMutation({
     mutationFn: signIn,
+    onSuccess: (data) => {
+      if (data.error) {
+        if (data.error.message === 'Email not confirmed') {
+          toast.error(
+            'Email não confirmado, por favor confirme antes de acessar a aplicação.',
+          )
+        } else {
+          toast.error('Credenciais inválidas.')
+        }
+      } else {
+        toast.success('Bem-vindo!')
+        navigate('/dashboard', { replace: true })
+      }
+    },
   })
 
   async function handleSignIn(data: SignInForm) {
     try {
       await authenticate(data)
-
-      toast.success('Enviamos um link de autenticação para seu e-mail.', {
-        action: {
-          label: 'Reenviar e-mail',
-          onClick: () => handleSignIn(data),
-        },
-      })
     } catch (error) {
       toast.error('Credenciais inválidas.')
     }
