@@ -1,5 +1,15 @@
 import { supabase } from '@/lib/supabase'
 
-export async function getProfile() {
-  return (await supabase.auth.getUser()).data.user
+interface GetProfileParams {
+  userId: string
+}
+
+export async function getProfile({ userId }: GetProfileParams) {
+  const response = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userId)
+    .single()
+
+  return response.data
 }

@@ -9,92 +9,6 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      _prisma_migrations: {
-        Row: {
-          applied_steps_count: number
-          checksum: string
-          finished_at: string | null
-          id: string
-          logs: string | null
-          migration_name: string
-          rolled_back_at: string | null
-          started_at: string
-        }
-        Insert: {
-          applied_steps_count?: number
-          checksum: string
-          finished_at?: string | null
-          id: string
-          logs?: string | null
-          migration_name: string
-          rolled_back_at?: string | null
-          started_at?: string
-        }
-        Update: {
-          applied_steps_count?: number
-          checksum?: string
-          finished_at?: string | null
-          id?: string
-          logs?: string | null
-          migration_name?: string
-          rolled_back_at?: string | null
-          started_at?: string
-        }
-        Relationships: []
-      }
-      accounts: {
-        Row: {
-          access_token: string | null
-          expires_at: number | null
-          id: string
-          id_token: string | null
-          provider: string
-          provider_account_id: string
-          refresh_token: string | null
-          scope: string | null
-          session_state: string | null
-          token_type: string | null
-          type: string
-          user_id: string
-        }
-        Insert: {
-          access_token?: string | null
-          expires_at?: number | null
-          id: string
-          id_token?: string | null
-          provider: string
-          provider_account_id: string
-          refresh_token?: string | null
-          scope?: string | null
-          session_state?: string | null
-          token_type?: string | null
-          type: string
-          user_id: string
-        }
-        Update: {
-          access_token?: string | null
-          expires_at?: number | null
-          id?: string
-          id_token?: string | null
-          provider?: string
-          provider_account_id?: string
-          refresh_token?: string | null
-          scope?: string | null
-          session_state?: string | null
-          token_type?: string | null
-          type?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "accounts_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
       entries: {
         Row: {
           created_at: string
@@ -102,7 +16,7 @@ export interface Database {
           notes_id: string | null
           title: string
           type: string
-          updated_at: string
+          updated_at: string | null
           value: number
         }
         Insert: {
@@ -111,7 +25,7 @@ export interface Database {
           notes_id?: string | null
           title: string
           type: string
-          updated_at: string
+          updated_at?: string | null
           value: number
         }
         Update: {
@@ -120,7 +34,7 @@ export interface Database {
           notes_id?: string | null
           title?: string
           type?: string
-          updated_at?: string
+          updated_at?: string | null
           value?: number
         }
         Relationships: [
@@ -139,7 +53,7 @@ export interface Database {
           description: string | null
           id: string
           title: string
-          updated_at: string
+          updated_at: string | null
           user_id: string | null
         }
         Insert: {
@@ -147,7 +61,7 @@ export interface Database {
           description?: string | null
           id: string
           title: string
-          updated_at: string
+          updated_at?: string | null
           user_id?: string | null
         }
         Update: {
@@ -155,74 +69,33 @@ export interface Database {
           description?: string | null
           id?: string
           title?: string
-          updated_at?: string
+          updated_at?: string | null
           user_id?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "notes_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
+        Relationships: []
       }
-      sessions: {
+      profiles: {
         Row: {
-          expires: string
-          id: string
-          session_token: string
-          user_id: string
-        }
-        Insert: {
-          expires: string
-          id: string
-          session_token: string
-          user_id: string
-        }
-        Update: {
-          expires?: string
-          id?: string
-          session_token?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "sessions_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          }
-        ]
-      }
-      users: {
-        Row: {
-          avatar_url: string | null
-          bio: string | null
-          created_at: string
-          email: string | null
           id: string
           name: string
         }
         Insert: {
-          avatar_url?: string | null
-          bio?: string | null
-          created_at?: string
-          email?: string | null
           id: string
           name: string
         }
         Update: {
-          avatar_url?: string | null
-          bio?: string | null
-          created_at?: string
-          email?: string | null
           id?: string
           name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "profiles_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {

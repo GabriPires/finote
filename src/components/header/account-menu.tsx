@@ -1,9 +1,10 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
-import { Building, LogOut, User } from 'lucide-react'
+import { Contact2, LogOut, User } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 import { signOut } from '@/api/sign-out'
 import { getProfile } from '@/api/user/get-profile'
+import { useUserContext } from '@/context/user-context'
 
 import { Button } from '../ui/button'
 import {
@@ -19,9 +20,11 @@ import { Skeleton } from '../ui/skeleton'
 export function AccountMenu() {
   const navigate = useNavigate()
 
-  const { data: profile, isLoading: isLoadingProfile } = useQuery({
-    queryKey: ['profile'],
-    queryFn: getProfile,
+  const { user } = useUserContext()
+
+  const { data: profile, isLoading: isLoadingUserProfile } = useQuery({
+    queryKey: ['user-profile'],
+    queryFn: async () => getProfile({ userId: user.id }),
     staleTime: Infinity,
   })
 
@@ -45,25 +48,20 @@ export function AccountMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">
-          {isLoadingProfile ? (
-            <div className="space-y-1.5">
-              <Skeleton className="h-4 w-32" />
-              <Skeleton className="h-3 w-24" />
-            </div>
+          {isLoadingUserProfile ? (
+            <Skeleton className="h-5 w-full" />
           ) : (
-            <>
-              <span>{profile?.email}</span>
-              <span className="text-sm font-normal text-muted-foreground">
-                {profile?.email}
-              </span>
-            </>
+            <span>{profile?.name}</span>
           )}
+          <span className="text-sm font-normal text-muted-foreground">
+            {user.email}
+          </span>
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />
 
         <DropdownMenuItem>
-          <Building className="mr-2 h-4 w-4" />
+          <Contact2 className="mr-2 h-4 w-4" />
           <span>Perfil</span>
         </DropdownMenuItem>
 
